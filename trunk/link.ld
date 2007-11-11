@@ -27,4 +27,4 @@ bss = .; _bss = .; __bss = .;
 end = .; _end = .; __end = .;
 } 
 INPUT(kernel_asm.o kernel.o video.o)
-OUTPUT(bin/kernel.sys)
+OUTPUT(iso/system/kernel.sys)
