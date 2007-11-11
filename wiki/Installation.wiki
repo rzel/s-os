@@ -1,0 +1,6 @@
+#summary Installing and Running Sos from a floppy or CD
+#labels Featured,Phase-Deploy
+
+= Introduction =
+
+_to be completed_
