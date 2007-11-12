@@ -4,7 +4,7 @@
 ==Building a CD image==
 _You do not *need* to build a CD image if you just want to try Sos. There are images available at the download page_
 
-When you run the make command in the Sos directory, a bootable CD image will be made from the folder iso. This requires the use of the mkisofs application.
+If you change the SoS Source code, you must rebuild the kernel. Instructions for doing this are on the [Building] page.
 
 ==Burning a CD Image==
 In some operating systems, like most Linux distributions, you can simply double click the .iso file, and it will be burnt to a CD-Rom. In Mac OS X, you can burn the iso with Disk Utility. Most other operating systems require you to download or buy a third party application to burn the image.
