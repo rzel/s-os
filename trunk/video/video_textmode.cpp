@@ -1,4 +1,4 @@
-#include "video.h"
+#include "video_textmode.h"
 
 video::video()
 {
@@ -9,6 +9,8 @@ video::video()
 	height = 25;
 	
 	videomem = (unsigned short*) 0xb8000;	// Set the address of the video ram
+	
+	clear();	// Clear the screen
 }
 
 video::~video() {}
