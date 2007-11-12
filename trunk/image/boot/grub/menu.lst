@@ -1,0 +1,17 @@
+# s-os Boot CD - Version 0.1
+
+# Boot the first entry
+default 0
+# Boot automatically after 10 secs.
+timeout 10
+
+#SoS
+title	SoS - Stephen's Operating System
+root	(cd0)
+root	/system/kernel.sys
+
+# For booting Windows NT or Windows95
+title Boot from Hard Drive
+root        (hd0,0)
+makeactive
+chainloader +1
