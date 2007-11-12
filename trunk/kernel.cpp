@@ -1,11 +1,11 @@
 #include "kernel.h"
 
-int main(void)
+int main(struct multiboot *mboot_ptr)
 {
 	video vid;
-
-	vid.clear();
+	
 	vid.write("Welcome to SoS version 0.0.1");
 	
-	return 0;
+	// Just to test if this works
+	return 0xDEADBEEF;
 }

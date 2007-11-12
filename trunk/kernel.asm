@@ -1,40 +1,49 @@
+;
+; kernel.asm -- Kernel start location. Also defines multiboot header.
+; Based on Bran's kernel development tutorial file start.asm, and James Molloy's tutorials
+;
+
+MBOOT_PAGE_ALIGN    equ 1<<0    ; Load kernel and modules on a page boundary
+MBOOT_MEM_INFO      equ 1<<1    ; Provide your kernel with memory info
+MBOOT_HEADER_MAGIC  equ 0x1BADB002 ; Multiboot Magic value
+
+; NOTE: We do not use MBOOT_AOUT_KLUDGE. It means that GRUB does not
+; pass us a symbol table.
+
+MBOOT_HEADER_FLAGS  equ MBOOT_PAGE_ALIGN | MBOOT_MEM_INFO
+MBOOT_CHECKSUM      equ -(MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
+
 [BITS 32]		; We're in Protected Mode
 
+[GLOBAL mboot]                  ; Make 'mboot' accessible from C.
+[EXTERN code]                   ; Start of the '.text' section.
+[EXTERN bss]                    ; Start of the .bss section.
+[EXTERN end]                    ; End of the last loadable section.
+
+
+mboot:
+  dd  MBOOT_HEADER_MAGIC        ; GRUB will search for this value on each
+                                ; 4-byte boundary in your kernel file
+  dd  MBOOT_HEADER_FLAGS        ; How GRUB should load your file / settings
+  dd  MBOOT_CHECKSUM            ; To ensure that the above values are correct
+   
+  dd  mboot                     ; Location of this descriptor
+  dd  code                      ; Start of kernel '.text' (code) section.
+  dd  bss                       ; End of kernel '.data' section.
+  dd  end                       ; End of kernel.
+  dd  start                     ; Kernel entry point (initial EIP).
+
+
 [global start]
-[extern main]		; The main function, as declared in kernel.cpp
+[extern main]			; The main function, as declared in kernel.cpp
 
 start:
-mov esp, _sys_stack     ; This points the stack to our new stack area
-call main		; Call our main function
+push ebx			; Load multiboot header location
 
-cli			; Disable interupts for now
-hlt			; Halt the processor
+cli				; Disable interupts for now
 
-; Multiboot header from Bran's Kernel Development tutorial
-ALIGN 4
-mboot:
-    ; Multiboot macros to make a few lines later more readable
-    MULTIBOOT_PAGE_ALIGN	equ 1<<0
-    MULTIBOOT_MEMORY_INFO	equ 1<<1
-    MULTIBOOT_AOUT_KLUDGE	equ 1<<16
-    MULTIBOOT_HEADER_MAGIC	equ 0x1BADB002
-    MULTIBOOT_HEADER_FLAGS	equ MULTIBOOT_PAGE_ALIGN | MULTIBOOT_MEMORY_INFO | MULTIBOOT_AOUT_KLUDGE
-    MULTIBOOT_CHECKSUM	equ -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
-    EXTERN code, bss, end
+call main			; Call our main function
 
-    ; This is the GRUB Multiboot header. A boot signature
-    dd MULTIBOOT_HEADER_MAGIC
-    dd MULTIBOOT_HEADER_FLAGS
-    dd MULTIBOOT_CHECKSUM
-    
-    ; AOUT kludge - must be physical addresses. Make a note of these:
-    ; The linker script fills in the data for these ones!
-    dd mboot
-    dd code
-    dd bss
-    dd end
-    dd start
+jmp $				; Halt the processor
 
-SECTION .bss
-    resb 8192               ; This reserves 8KBytes of memory here
-_sys_stack:
+

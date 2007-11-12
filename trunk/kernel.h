@@ -3,6 +3,6 @@
 
 #include "video/video_textmode.h"
 
-int main(void);
+int main(struct multiboot *mboot_ptr);
 
 #endif
