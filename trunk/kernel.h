@@ -5,4 +5,10 @@
 
 int main(struct multiboot *mboot_ptr);
 
+extern "C"
+        {
+        int __cxa_atexit(void (*f)(void *), void *p, void *d);
+        void __cxa_finalize(void *d);
+        };
+
 #endif

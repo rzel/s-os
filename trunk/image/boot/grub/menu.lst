@@ -2,8 +2,10 @@
 
 # Boot the first entry
 default 0
-# Boot automatically after 10 secs.
-timeout 5
+#Splash Image
+splashimage=(cd)/boot/grub/sos.xpm.gz
+viewport 1 1 79 24
+
 
 #SoS
 title	SoS - Stephen's Operating System
