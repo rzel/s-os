@@ -63,12 +63,6 @@ void video::putch(char c)
 	}
 	else
 	{
-		if(offset >= (width*height))
-		{
-			scroll(); 	// Scroll the contents of the display up
-		}		
-		
-		//videomem[offset + position] = (unsigned char) c | 0x0700;
 		videomem[offset + position] = (unsigned char) c | colour;
 	
 		cursor_x++;		// Move the cursor forward one character
@@ -103,7 +97,27 @@ void video::move_cursor(u8int x, u8int y)
 
 void video::scroll()
 {
-	// TODO: Make scrolling function
+	u8int  attributeByte = (0 << 4) | (7 & 0x0F);
+	u16int blank = 0x20 | (attributeByte << 8);
+	
+	// Move every character up one line
+	for(int i = 0; i < width * (height - 1); i++)
+	{
+		videomem[i] = videomem[i + 80];
+	}
+	
+	// Clear the last line
+	for(int i = width * (height - 1); i < width * height; i++)
+	{
+		videomem[i] = blank;
+	}
+	
+	// Reset the coordinates and offset
+	position = 0;
+	cursor_x = 0;
+	cursor_y = height;
+	offset = width * (height - 1);
+	
 }
 
 void video::newline()
@@ -113,6 +127,11 @@ void video::newline()
 	
 	offset += width;
 	cursor_y++;
+	
+	if(offset >= (width*height))
+	{
+		scroll(); 	// Scroll the contents of the display up
+	}
 }
 
 void video::setcolour(u8int back, u8int fore)
