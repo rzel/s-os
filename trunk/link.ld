@@ -30,5 +30,5 @@ SECTIONS
 
   end = .; _end = .; __end = .;
 }
-INPUT(kernel_asm.o kernel.o video_textmode.o)
+INPUT(kernel_asm.o kernel.o common.o video_textmode.o vbe.o)
 OUTPUT(image/system/kernel.sys)
