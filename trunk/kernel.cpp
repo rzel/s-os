@@ -9,10 +9,10 @@ int main(struct multiboot *mboot_ptr)
 {
 	video vid;
 	
-	vid.write("Welcome to SoS version 0.0.1\n\nThis is a test of newlines");
+	vid.write("Welcome to SoS version 0.0.1\n\nYes, this is all there is!");	
 	
 	//__cxa_finalize(0); - This will be required once globals are supported
 	
-	// Just to test if this works
+	// Just to test if we exit properley
 	return 0xDEADBEEF;
 }
