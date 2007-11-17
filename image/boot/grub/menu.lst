@@ -2,9 +2,13 @@
 
 # Boot the first entry
 default 0
+
 #Splash Image
 splashimage=(cd)/boot/grub/sos.xpm.gz
 viewport 1 1 79 24
+
+#Timeout
+timeout 5
 
 
 #SoS
