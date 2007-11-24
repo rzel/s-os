@@ -40,10 +40,9 @@ mboot:
 start:
 push ebx			; Load multiboot header location
 
-cli				; Disable interupts for now
+cli				; Disable interupts
 
 call main			; Call our main function
 
 jmp $				; Halt the processor
-
 
