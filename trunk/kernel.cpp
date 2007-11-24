@@ -4,8 +4,10 @@
 #include "video_textmode.h"
 #include "common.h"
 #include "vbe.h"
+#include "gdt.h"
 
 video* vid;
+gdt* gdt_test;
 
 void test();
 
@@ -13,6 +15,7 @@ int main(struct multiboot *mboot_ptr)
 {
 	construct();
 	
+	gdt_test = new gdt();
 	vid = new video();
 	
 	vid->setcolour(0, 2);
@@ -35,4 +38,5 @@ void test()
 {
 	vid->write("\n\nTesting global objects!");
 }
+
 
