@@ -5,14 +5,34 @@
 #include "common.h"
 #include "vbe.h"
 
+video* vid;
+
+void test();
+
 int main(struct multiboot *mboot_ptr)
 {
-	video vid;
+	construct();
 	
-	vid.write("Welcome to SoS version 0.0.1\n\nYes, this is all there is!");	
+	vid = new video();
 	
-	//__cxa_finalize(0); - This will be required once globals are supported
+	vid->setcolour(0, 2);
+	vid->write("Welcome to SoS version 0.1 Alpha 1");
+	
+	vid->setcolour(0, 7);
+	
+	test();
+	
+	vid->write("\n\nShutting Down...");
+
+	destruct();
+	__cxa_finalize(0);
 	
 	// Just to test if we exit properley
 	return 0xDEADBEEF;
 }
+
+void test()
+{
+	vid->write("\n\nTesting global objects!");
+}
+

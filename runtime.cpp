@@ -1,10 +1,7 @@
 // Sos Version 0.1
 // Very Basic C++ Runtime support - Based on code from OSdev.org Wiki
-// This is not operational yet - I will work on global/static objects and
-// the new and delete operators once I have heap management working.
-// This file is not linked to the kernel binary.
 
-unsigned char uint_t;
+#include "common.h"
 
 extern "C" void __cxa_pure_virtual()
 {
@@ -51,16 +48,63 @@ void __cxa_finalize(void *d)
         }
 }
 
+void construct()
+{
+    //Walk and call the constructors in the ctor_list
 
-/*//overload the operator "new"
-void* operator new (uint_t size)
+    //the ctor list is defined in the linker script
+    extern void (*__CTOR_LIST__)() ;
+
+    //hold current constructor in list
+    void (**constructor)() = &__CTOR_LIST__ ;
+
+    //the first int is the number of constructors
+    int total = *(int *)constructor ;
+
+    //increment to first constructor
+    constructor++ ;
+
+    while(total)
+    {
+        (*constructor)() ;
+        total-- ;
+        constructor++ ;
+    }
+}
+
+void destruct()
+{
+    //Walk and call the deconstructors in the dtor_list
+
+    //the dtor list is defined in the linker script
+    extern void (*__DTOR_LIST__)() ;
+
+    //hold current deconstructor in list
+    void (**deconstructor)() = &__DTOR_LIST__ ;
+
+    //the first int is the number of deconstructors
+    int total = *(int *)deconstructor ;
+
+    //increment to first deconstructor
+    deconstructor++ ;
+
+    while(total)
+    {
+        (*deconstructor)() ;
+        total-- ;
+        deconstructor++ ;
+    }
+}
+
+//overload the operator "new"
+void* operator new (u32int size)
 {
 	//return kmalloc(size);
 	// FIXME: This needs to be implemented
 }
 
 //overload the operator "new[]"
-void* operator new[] (uint_t size)
+void* operator new[] (u32int size)
 {
 	// return kmalloc(size);
 	// FIXME: This needs to be implemented
@@ -78,4 +122,4 @@ void operator delete[] (void * p)
 {
 	// kfree(p);
 	 // FIXME: This needs to be implemented
-}*/
+}
