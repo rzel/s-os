@@ -7,19 +7,20 @@
 #include "gdt.h"
 
 video* vid;
-gdt* gdt_test;
+gdt* gdt_i;
 
 void test();
+void init();
 
 int main(struct multiboot *mboot_ptr)
 {
 	construct();
 	
-	gdt_test = new gdt();
-	vid = new video();
+	init(); // Initiate SoS
+	
 	
 	vid->setcolour(0, 2);
-	vid->write("Welcome to SoS version 0.1 Alpha 1");
+	vid->write("\nSoS version 0.1 Alpha 1 - Revision 20");
 	
 	vid->setcolour(0, 7);
 	
@@ -37,6 +38,22 @@ int main(struct multiboot *mboot_ptr)
 void test()
 {
 	vid->write("\n\nTesting global objects!");
+	
+	vid->write("\nVideo object located at: ");
+	vid->puthex((u32int)&vid);
+	
+	vid->write("\nGDT object located at: ");
+	vid->puthex((u32int)&gdt_i);
+	
 }
 
-
+void init()
+{
+	vid = new video();
+	
+	vid->setcolour(0, 14);
+	vid->write("Starting SoS...\n");
+	vid->setcolour(0, 7);
+	
+	gdt_i = new gdt();
+}

@@ -1,7 +1,11 @@
 #include "gdt.h"
+#include "video_textmode.h"
+
+extern video * vid;
 
 gdt::gdt()
 {
+	vid->write("Setting up GDT");
 	gdt_ptr.limit = (sizeof(gdt_entry_t) * 5) - 1;
 	gdt_ptr.base  = (u32int)&gdt_entries;
 	
@@ -12,6 +16,10 @@ gdt::gdt()
 	set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);	// User mode data segment
 	
 	gdt_flush((u32int)&gdt_ptr);
+	
+	vid->setcolour(0,2);
+	vid->write("\t\t[OK]\n");
+	vid->setcolour(0,7);
 }
 
 void gdt::set_gate(s32int num, u32int base, u32int limit, u8int access, u8int gran)
