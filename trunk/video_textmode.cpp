@@ -61,6 +61,11 @@ void video::putch(char c)
 		cursor_x = 0;
 		position = 0;
 	}
+	else if(c == '\t')
+	{
+		write("        ");
+		// FIXME: This should print a number of spaces to make position divisible by 8
+	}
 	else
 	{
 		videomem[offset + position] = (unsigned char) c | colour;

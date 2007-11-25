@@ -2,6 +2,7 @@
 // Very Basic C++ Runtime support - Based on code from OSdev.org Wiki
 
 #include "common.h"
+#include "heap.h"
 
 extern "C" void __cxa_pure_virtual()
 {
@@ -99,14 +100,14 @@ void destruct()
 //overload the operator "new"
 void* operator new (u32int size)
 {
-	//return kmalloc(size);
+	return (void*) kmalloc(size);
 	// FIXME: This needs to be implemented
 }
 
 //overload the operator "new[]"
 void* operator new[] (u32int size)
 {
-	// return kmalloc(size);
+	return (void *) kmalloc(size);
 	// FIXME: This needs to be implemented
 }
 
