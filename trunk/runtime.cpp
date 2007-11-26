@@ -1,8 +1,8 @@
 // Sos Version 0.1
 // Very Basic C++ Runtime support - Based on code from OSdev.org Wiki
 
-#include "common.h"
-#include "heap.h"
+#include "include/common.h"
+#include "include/heap.h"
 
 extern "C" void __cxa_pure_virtual()
 {
