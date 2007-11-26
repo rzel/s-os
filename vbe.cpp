@@ -1,7 +1,7 @@
 // vbe.cpp - Change graphics mode
 
-#include "common.h"
-#include "vbe.h"
+#include "include/common.h"
+#include "include/vbe.h"
 
 void vbe_write(u16int index, u16int value)
 {

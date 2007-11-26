@@ -1,4 +1,4 @@
-#include "video_textmode.h"
+#include "include/video_textmode.h"
 
 video::video()
 {
@@ -63,8 +63,8 @@ void video::putch(char c)
 	}
 	else if(c == '\t')
 	{
-		write("        ");
-		// FIXME: This should print a number of spaces to make position divisible by 8
+		 cursor_x = (cursor_x + 8) & ~(8 - 1);
+		 position = cursor_x;
 	}
 	else
 	{

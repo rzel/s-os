@@ -1,5 +1,5 @@
-#include "gdt.h"
-#include "video_textmode.h"
+#include "include/gdt.h"
+#include "include/video_textmode.h"
 
 extern video * vid;
 
@@ -32,6 +32,7 @@ void gdt::set_gate(s32int num, u32int base, u32int limit, u8int access, u8int gr
 	gdt_entries[num].granularity = (limit >> 16) & 0xFF;
 
 	gdt_entries[num].granularity |= gran & 0xF0;
+	gdt_entries[num].granularity &= 0xDF; 
 	gdt_entries[num].access      = access;
 }
 
