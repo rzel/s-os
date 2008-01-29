@@ -1,45 +1,27 @@
 // This is the main C++ kernel file. main is called from the Assembly boilerplate
 
 #include "include/kernel.h"
-#include "include/video_textmode.h"
-#include "include/common.h"
-#include "include/vbe.h"
-#include "include/gdt.h"
-#include "include/idt.h"
+
+using namespace std;
 
 video * vid;
-gdt * gdt_i;
-idt * idt_i;
+kernel * kernel_i;
 
 void test();
-void init();
-void kb_test(registers_t regs);
 
 int main(struct multiboot *mboot_ptr)
 {
 	construct();
 	
-	init(); // Initiate SoS
-	
+	kernel_i = new kernel();		// Start up the kernel
 	
 	vid->setcolour(0, 2);
-	vid->write("\nSoS version 0.1 Alpha 1 - Revision 20");
-	
+	vid->write("\nSoS version 0.1 Alpha 1 - Revision 22");
 	vid->setcolour(0, 7);
 	
 	test();
 
-	idt_i->register_irq_handler(1, kb_test);
-	
-	while(1)
-	{
-		// wait
-	}
-	
-	vid->write("\n\nShutting Down...");
-
-	destruct();
-	__cxa_finalize(0);
+	delete kernel_i;	// Delete the instance of the kernel
 	
 	// Just to test if we exit properley
 	return 0xDEADBEEF;
@@ -47,18 +29,14 @@ int main(struct multiboot *mboot_ptr)
 
 void test()
 {
-	vid->write("\n\nVideo object located at: ");
+	vid->write("\n\nKernel object located at: ");
+	vid->puthex((u32int)&kernel_i);
+	
+	vid->write("\nVideo object located at: ");
 	vid->puthex((u32int)&vid);
-	
-	//vid->write("\nGDT object located at: ");
-	//vid->puthex((u32int)&gdt_i);
-	
-	vid->write("\nIDT object located at: ");
-	vid->puthex((u32int)&idt_i);
-	
 }
 
-void init()
+kernel::kernel()
 {
 	vid = new video();
 	
@@ -66,14 +44,42 @@ void init()
 	vid->write("Starting SoS...\n");
 	vid->setcolour(0, 7);
 	
-	gdt_i = new gdt();
-	
-	idt_i = new idt();
+	init();
 }
 
-void kb_test(registers_t regs)
+kernel::~kernel()
 {
-	vid->write("*");
+	vid->write("\n\nShutting Down...");
+	
+	terminate();
 }
+
+void kernel::init()
+{	
+	long_mode();
+	
+	//gdi_i = new gdt();	// The GDT describes 64 bit segments, so the computer will crash if we
+					// try to call it before jumping to long mode.
+}
+
+void kernel::long_mode()
+{
+	vid->write("Jumping to Long Mode");
+	
+	vid->setcolour(0, 4);
+	vid->write("\t\t[FAIL]\n");
+	
+	vid->write("FIXME: Jump to long mode here\n");
+	
+	vid->setcolour(0, 7);
+	
+}
+
+void kernel::terminate()
+{	
+	destruct();
+	__cxa_finalize(0);
+}
+
 
 

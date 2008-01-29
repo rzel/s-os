@@ -168,13 +168,13 @@ void video::scroll()
 	u16int blank = 0x20 | (attributeByte << 8);
 	
 	// Move every character up one line
-	for(int i = 0; i < width * (height - 1); i++)
+	for(unsigned int i = 0; i < width * (height - 1); i++)
 	{
 		videomem[i] = videomem[i + 80];
 	}
 	
 	// Clear the last line
-	for(int i = width * (height - 1); i < width * height; i++)
+	for(unsigned int i = width * (height - 1); i < width * height; i++)
 	{
 		videomem[i] = blank;
 	}

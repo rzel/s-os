@@ -1,7 +1,7 @@
 # A Quick and dirty makefile. This builds the OS and then makes a bootable CD image
 
 all:
-	g++ -c *.cpp -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-stack-protector
+	g++ -c *.cpp -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-stack-protector -W -Wall
 	nasm -f elf kernel.asm -o kernel_asm.o
 	nasm -f elf descriptor_tables.asm -o descriptor_tables.o
 	ld -T link.ld
