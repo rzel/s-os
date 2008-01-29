@@ -4,8 +4,10 @@
 #include "video_textmode.h"
 #include "common.h"
 #include "vbe.h"
-#include "paging.h"
 #include "gdt.h"
+#include "paging.h"
+#include "multiboot.h"
+#include "cpuid.h"
 
 int main(struct multiboot *mboot_ptr);
 
@@ -24,12 +26,18 @@ protected:
 	void terminate();
 	void long_mode();
 	
-	// Instances of our IDT and GDT objects
+	// Instances of our GDT and paging objects
 	gdt * gdi_i;
+	paging * paging_i;
+	
+	// Variables
+	u32int total_memory;
 
 public:
 	kernel();		// The constructor calls the init function
 	~kernel();
+	
+	void calculate_memory(struct multiboot * mboot_ptr);
 };
 
 #endif

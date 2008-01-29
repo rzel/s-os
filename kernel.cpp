@@ -14,9 +14,10 @@ int main(struct multiboot *mboot_ptr)
 	construct();
 	
 	kernel_i = new kernel();		// Start up the kernel
+	kernel_i->calculate_memory(mboot_ptr);
 	
 	vid->setcolour(0, 2);
-	vid->write("\nSoS version 0.1 Alpha 1 - Revision 22");
+	vid->write("\nSoS version 0.1 Alpha 1 - Revision 24");
 	vid->setcolour(0, 7);
 	
 	test();
@@ -49,7 +50,7 @@ kernel::kernel()
 
 kernel::~kernel()
 {
-	vid->write("\n\nShutting Down...");
+	vid->write("\n\nShutting Down...\n");
 	
 	terminate();
 }
@@ -60,6 +61,8 @@ void kernel::init()
 	
 	//gdi_i = new gdt();	// The GDT describes 64 bit segments, so the computer will crash if we
 					// try to call it before jumping to long mode.
+					
+	paging_i = new paging();
 }
 
 void kernel::long_mode()
@@ -77,9 +80,27 @@ void kernel::long_mode()
 
 void kernel::terminate()
 {	
+	delete paging_i;
+	
 	destruct();
 	__cxa_finalize(0);
 }
 
+void kernel::calculate_memory(struct multiboot * mboot_ptr)
+{
+	u32int upper = mboot_ptr->mem_upper;
+	u32int lower = mboot_ptr->mem_lower;
+	
+	vid->write("Calculating Memory\t\t");
+	
+	total_memory = upper + lower;
+	
+	vid->setcolour(0, 2);
+	
+	vid->putint((u32int) total_memory / 1024);
+	
+	vid->write("MB Detected\n");
+	vid->setcolour(0, 7);
+}
 
 

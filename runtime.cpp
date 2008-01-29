@@ -116,7 +116,10 @@ void* operator new[] (u32int size)
 void operator delete (void * p)
 {
 	//kfree(p);
-	vid->write("\nFIXME: Delete not implemented yet");
+	vid->setcolour(0, 14);
+	vid->write("\nFIXME:");
+	vid->setcolour(0, 7);
+	vid->write(" kfree not implemented yet");
 }
 
 //overload the operator "delete[]"
