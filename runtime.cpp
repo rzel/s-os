@@ -3,10 +3,13 @@
 
 #include "include/common.h"
 #include "include/heap.h"
+#include "include/video_textmode.h"
+
+extern video * vid;		// Our instance of the video class as defined in kernel.cpp
 
 extern "C" void __cxa_pure_virtual()
 {
-    // print error message
+    vid->write("\nThis process tried to execute an illegal action");
 }
 
 extern "C"
@@ -101,21 +104,19 @@ void destruct()
 void* operator new (u32int size)
 {
 	return (void*) kmalloc(size);
-	// FIXME: This needs to be implemented
 }
 
 //overload the operator "new[]"
 void* operator new[] (u32int size)
 {
 	return (void *) kmalloc(size);
-	// FIXME: This needs to be implemented
 }
 
 //overload the operator "delete"
 void operator delete (void * p)
 {
 	//kfree(p);
-	// FIXME: This needs to be implemented
+	vid->write("\nFIXME: Delete not implemented yet");
 }
 
 //overload the operator "delete[]"

@@ -6,15 +6,15 @@
 class video
 {
 private:
-	int width;			// width of the screen
-	int height;			// height of the screen
+	u32int width;				// width of the screen
+	u32int height;				// height of the screen
 	u8int cursor_x;			// The X and Y cooddinates of the cursor
 	u8int cursor_y;			
 	
-	u16int colour;			// A byte holding the colour information
+	u16int colour;				// A byte holding the colour information
 	
-	unsigned int offset;		// Offset 
-	unsigned int position; 		// X coordinate
+	u32int offset;				// Offset 
+	u32int position; 			// X coordinate
 	unsigned short *videomem;	// A pointer to the video RAM
 	
 public:
