@@ -3,6 +3,7 @@
 all:
 	g++ -c *.cpp -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-stack-protector -W -Wall
 	nasm -f elf kernel.asm -o kernel_asm.o
+	nasm -f elf cpuid.asm -o cpuid_asm.o
 	nasm -f elf descriptor_tables.asm -o descriptor_tables.o
 	ld -T link.ld
 	rm *.o

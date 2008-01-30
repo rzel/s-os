@@ -35,14 +35,18 @@ mboot:
 
 
 [global start]
+[global halt]
 [extern main]			; The main function, as declared in kernel.cpp
 
 start:
-push ebx			; Load multiboot header location
+push ebx				; Load multiboot header location
 
-cli				; Disable interupts
+cli					; Disable interupts
 
-call main			; Call our main function
+call main				; Call our main function
 
-jmp $				; Halt the processor
+call halt				; Halt the processor
+
+halt:
+	jmp $
 

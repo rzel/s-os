@@ -2,6 +2,9 @@
 // From JamesM's kernel development tutorials.
 
 #include "include/common.h"
+#include "include/video_textmode.h"
+
+extern video * vid;
 
 // Write a byte out to the specified port.
 void outb(u16int port, u8int value)
@@ -41,6 +44,16 @@ void memset(u8int *dest, u8int val, u32int len)
 {
     u8int *temp = (u8int *)dest;
     for ( ; len != 0; len--) *temp++ = val;
+}
+
+// This function prints a FIXME: message
+void fixme(char * message)
+{
+	vid->setcolour(0, 4);
+	vid->write("FIXME: ");
+	vid->setcolour(0, 7);
+	vid->write(message);
+	vid->write("\n");
 }
 
 

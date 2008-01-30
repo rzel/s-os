@@ -35,6 +35,12 @@ void test()
 	
 	vid->write("\nVideo object located at: ");
 	vid->puthex((u32int)&vid);
+	vid->write("\n");
+	
+	vid->write("\nProcessor vendor string: ");
+	vid->write(get_cpu_vendor());
+	
+	vid->write("\n");
 }
 
 kernel::kernel()
@@ -42,7 +48,7 @@ kernel::kernel()
 	vid = new video();
 	
 	vid->setcolour(0, 14);
-	vid->write("Starting SoS...\n");
+	vid->write("Starting SoS...\n\n");
 	vid->setcolour(0, 7);
 	
 	init();
@@ -50,7 +56,7 @@ kernel::kernel()
 
 kernel::~kernel()
 {
-	vid->write("\n\nShutting Down...\n");
+	vid->write("\nShutting Down...\n");
 	
 	terminate();
 }
@@ -69,10 +75,26 @@ void kernel::long_mode()
 {
 	vid->write("Jumping to Long Mode");
 	
-	vid->setcolour(0, 4);
-	vid->write("\t\t[FAIL]\n");
+	if(!cpuid_check_flag(CPUID_FLAG_IA64))
+	{
+		vid->setcolour(0, 4);
+		vid->write("\t\t\t[FAIL]\n");
+		
+		vid->write("\nFatal Error:\n");
+		
+		vid->setcolour(0, 7);
+		
+		vid->write("This processor does not support 64 bit long mode,\nand is unable to run SoS.\n\n");
+		
+		vid->write("Sorry for any inconvienence");
+		
+		halt();
+	}
 	
-	vid->write("FIXME: Jump to long mode here\n");
+	vid->setcolour(0, 2);
+	vid->write("\t\t\t[OK]\n");
+	
+	fixme("Jump to long mode here");
 	
 	vid->setcolour(0, 7);
 	
@@ -91,7 +113,7 @@ void kernel::calculate_memory(struct multiboot * mboot_ptr)
 	u32int upper = mboot_ptr->mem_upper;
 	u32int lower = mboot_ptr->mem_lower;
 	
-	vid->write("Calculating Memory\t\t");
+	vid->write("Calculating Memory\t\t\t");
 	
 	total_memory = upper + lower;
 	
@@ -99,7 +121,7 @@ void kernel::calculate_memory(struct multiboot * mboot_ptr)
 	
 	vid->putint((u32int) total_memory / 1024);
 	
-	vid->write("MB Detected\n");
+	vid->write("MB\n");
 	vid->setcolour(0, 7);
 }
 
