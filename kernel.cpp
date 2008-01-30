@@ -105,6 +105,8 @@ void kernel::long_mode()
 void kernel::terminate()
 {	
 	delete paging_i;
+	//delete gdt_i;
+	delete vid;
 	
 	destruct();
 	__cxa_finalize(0);

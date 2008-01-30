@@ -2,7 +2,7 @@
 // Very Basic C++ Runtime support - Based on code from OSdev.org Wiki
 
 #include "include/common.h"
-#include "include/heap.h"
+#include "include/kheap.h"
 #include "include/video_textmode.h"
 
 extern video * vid;		// Our instance of the video class as defined in kernel.cpp
@@ -118,6 +118,8 @@ void operator delete (void * p)
 	//kfree(p);
 
 	fixme("kfree not implemented yet");
+	// WARNING: This could cause a segfault if it the video_textmode object (vid)
+	// is not deleted last
 }
 
 //overload the operator "delete[]"
