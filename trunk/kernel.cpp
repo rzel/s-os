@@ -17,7 +17,7 @@ int main(struct multiboot *mboot_ptr)
 	kernel_i->calculate_memory(mboot_ptr);
 	
 	vid->setcolour(0, 2);
-	vid->write("\nSoS version 0.1 Alpha 1 - Revision 24");
+	vid->write("\nSoS version 0.1 Alpha 1 - Revision 26");
 	vid->setcolour(0, 7);
 	
 	test();
@@ -75,6 +75,8 @@ void kernel::long_mode()
 {
 	vid->write("Jumping to Long Mode");
 	
+	// First we check the CPUID information to see if the processor can
+	// support 64 bit code
 	if(!cpuid_check_flag(CPUID_FLAG_IA64))
 	{
 		vid->setcolour(0, 4);
@@ -94,7 +96,7 @@ void kernel::long_mode()
 	vid->setcolour(0, 2);
 	vid->write("\t\t\t[OK]\n");
 	
-	fixme("Jump to long mode here");
+	fixme("Jump to Long mode here");
 	
 	vid->setcolour(0, 7);
 	
@@ -121,7 +123,7 @@ void kernel::calculate_memory(struct multiboot * mboot_ptr)
 	
 	vid->putint((u32int) total_memory / 1024);
 	
-	vid->write("MB\n");
+	vid->write("MB detected\n");
 	vid->setcolour(0, 7);
 }
 
