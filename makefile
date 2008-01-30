@@ -12,5 +12,5 @@ clean:
 	rm *.o
 	
 install:
-	cp /usr/lib/grub/i386-pc/stage2_eltorito image/boot/grub
+	#cp /usr/lib/grub/i386-pc/stage2_eltorito image/boot/grub
 	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o sos.iso image

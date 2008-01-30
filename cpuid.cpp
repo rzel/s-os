@@ -8,7 +8,7 @@ char * get_cpu_vendor()
 {	
 	// Still trying to work out how to decode the names without magic numbers...
 	
-switch(get_cpuid_ebx((u32int)0x0)) {
+switch(get_cpuid_ebx(0x0)) {
 		case 0x756e6547: //Intel Magic Code
 			return "GenuineIntel";
 			break;
@@ -25,7 +25,7 @@ bool cpuid_check_flag(u32int flag)
 {
 	// I don't know if this is correct...
 	
-	if((get_cpuid_ebx((u32int)0x1) || flag) == 0x1)
+	if((get_cpuid_ebx(0x1) || flag) == 0x1)
 		return true;
 	else
 		return false;
