@@ -3,7 +3,7 @@
 
 extern video * vid;
 
-// This is just a skeleton class for paging
+// This doesn't do anything yet, just a skeleton as of now...
 
 paging::paging()
 {
@@ -20,3 +20,21 @@ paging::~paging()
 {
 	
 }
+
+void paging::switch_page_directory(page_directory_t *new_directory)
+{
+
+}
+	
+
+page_t *get_page(u32int address, bool make, page_directory_t *dir)
+{
+	page_t * tmp;
+	return tmp;
+}
+	
+void page_fault(registers_t regs)
+{
+
+}
+
