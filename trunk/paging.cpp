@@ -12,7 +12,7 @@ paging::paging()
 	// Init Paging here
 	
 	vid->setcolour(0,2);
-	vid->write("\t\t[OK]\n");
+	vid->write("\t\t\t[OK]\n");
 	vid->setcolour(0,7);
 }
 

@@ -3,4 +3,4 @@
 
 = Introduction =
 
-_To be completed_
+SoS is a small operating system written in C++ with some assembly. It is currently a 32 bit operating system, but I am working to change it to run in 64 bit long mode. I will drop support for 32 bit completly, as pretty much no new computer sold in the last few years comes with a 32 bit processor anymore.
