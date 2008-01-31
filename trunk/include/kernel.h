@@ -1,6 +1,8 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
+#define SYSTEM_VERSION "0.1 Alpha 1 - Revision 28"
+
 #include "video_textmode.h"
 #include "common.h"
 #include "vbe.h"

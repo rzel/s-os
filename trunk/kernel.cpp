@@ -17,7 +17,8 @@ int main(struct multiboot *mboot_ptr)
 	kernel_i->calculate_memory(mboot_ptr);
 	
 	vid->setcolour(0, 2);
-	vid->write("\nSoS version 0.1 Alpha 1 - Revision 26");
+	vid->write("\nSoS Version ");
+	vid->write(SYSTEM_VERSION);
 	vid->setcolour(0, 7);
 	
 	test();

@@ -41,10 +41,6 @@ u32int kmalloc(u32int sz, u32int * phys, bool align)
 }
 
 u32int kmalloc(u32int sz, bool align)
-{
-	/*u32int tmp = placement_address;
-	placement_address += sz;
-	return tmp;*/
-	
+{	
 	return kmalloc_internal(sz, align, NULL);
 }
