@@ -1,7 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 Alpha 1 - Revision 28"
+#define SYSTEM_VERSION "0.1 - SVN Revision 29"
 
 #include "video_textmode.h"
 #include "common.h"
@@ -10,8 +10,6 @@
 #include "paging.h"
 #include "multiboot.h"
 #include "cpuid.h"
-
-int main(struct multiboot *mboot_ptr);
 
 extern "C"
 {
@@ -26,11 +24,11 @@ class kernel {
 protected:
 	void init();
 	void terminate();
-	void long_mode();
+	void enable_long_mode();
 	
 	// Instances of our GDT and paging objects
-	gdt * gdi_i;
 	paging * paging_i;
+	gdt * gdi_i;
 	
 	// Variables
 	u32int total_memory;
@@ -41,5 +39,7 @@ public:
 	
 	void calculate_memory(struct multiboot * mboot_ptr);
 };
+
+extern kernel * kernel_i;
 
 #endif

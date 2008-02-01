@@ -1,8 +1,6 @@
 #include "include/common.h"
 #include "include/cpuid.h"
-#include "include/video_textmode.h"
-
-extern video * vid;
+//#include "include/video_textmode.h"
 
 char * get_cpu_vendor()
 {	

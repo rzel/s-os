@@ -35,7 +35,11 @@ mboot:
 
 
 [global start]
+
 [global halt]
+[global disable]
+[global enable]
+
 [extern main]			; The main function, as declared in kernel.cpp
 
 start:
@@ -49,4 +53,12 @@ call halt				; Halt the processor
 
 halt:
 	jmp $
+	
+enable:
+	sti
+	ret
+	
+disable:
+	cli
+	ret
 

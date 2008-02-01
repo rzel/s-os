@@ -1,48 +1,10 @@
-// This is the main C++ kernel file. main is called from the Assembly boilerplate
+// This is the kernel object
 
 #include "include/kernel.h"
 
 using namespace std;
 
-video * vid;
 kernel * kernel_i;
-
-void test();
-
-int main(struct multiboot *mboot_ptr)
-{
-	construct();
-	
-	kernel_i = new kernel();		// Start up the kernel
-	kernel_i->calculate_memory(mboot_ptr);
-	
-	vid->setcolour(0, 2);
-	vid->write("\nSoS Version ");
-	vid->write(SYSTEM_VERSION);
-	vid->setcolour(0, 7);
-	
-	test();
-
-	delete kernel_i;	// Delete the instance of the kernel
-	
-	// Just to test if we exit properley
-	return 0xDEADBEEF;
-}
-
-void test()
-{
-	vid->write("\n\nKernel object located at: ");
-	vid->puthex((u32int)&kernel_i);
-	
-	vid->write("\nVideo object located at: ");
-	vid->puthex((u32int)&vid);
-	vid->write("\n");
-	
-	vid->write("\nProcessor vendor string: ");
-	vid->write(get_cpu_vendor());
-	
-	vid->write("\n");
-}
 
 kernel::kernel()
 {
@@ -64,16 +26,19 @@ kernel::~kernel()
 
 void kernel::init()
 {	
-	long_mode();
+	#ifdef PLATFORM_X86_64
+		enable_long_mode();
+	#endif
 	
-	//gdi_i = new gdt();	// The GDT describes 64 bit segments, so the computer will crash if we
-					// try to call it before jumping to long mode.
+	gdi_i = new gdt();
 					
 	paging_i = new paging();
 }
 
-void kernel::long_mode()
+void kernel::enable_long_mode()
 {
+	// This function will only be called if the platform is defined as
+	// X86_64 in common.h.
 	vid->write("Jumping to Long Mode");
 	
 	// First we check the CPUID information to see if the processor can
@@ -81,15 +46,9 @@ void kernel::long_mode()
 	if(!cpuid_check_flag(CPUID_FLAG_IA64))
 	{
 		vid->setcolour(0, 4);
-		vid->write("\t\t\t[FAIL]\n");
+		vid->write("\t\t\t[FAIL]\n\n");
 		
-		vid->write("\nFatal Error:\n");
-		
-		vid->setcolour(0, 7);
-		
-		vid->write("This processor does not support 64 bit long mode,\nand is unable to run SoS.\n\n");
-		
-		vid->write("Sorry for any inconvienence");
+		panic("This processor does not support 64 bit long mode,\nand is unable to run this version of SoS.\n\nFor more information, please cousult the user manual");
 		
 		halt();
 	}

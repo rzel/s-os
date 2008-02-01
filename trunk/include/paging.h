@@ -41,6 +41,20 @@ typedef struct page_directory
 
 class paging 
 {
+private:
+	// A bitset of frames - used or free.
+	u32int *frames;
+	u32int nframes;
+	
+	void set_frame(u32int frame_address);
+	void clear_frame(u32int frame_address);
+	u32int test_frame(u32int frame_address);
+	
+	u32int first_frame();
+	
+	void alloc_frame(page_t * page, bool is_kernel, bool is_writeable);
+	void free_frame(page_t * page);
+	
 
 public:
 	paging();
