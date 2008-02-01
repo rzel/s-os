@@ -36,4 +36,6 @@ public:
 	void setcolour(u8int back, u8int fore);
 };
 
+extern video * vid;
+
 #endif

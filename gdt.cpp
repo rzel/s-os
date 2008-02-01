@@ -18,7 +18,7 @@ gdt::gdt()
 	gdt_flush((u32int)&gdt_ptr);
 	
 	vid->setcolour(0,2);
-	vid->write("\t\t\t[OK]\n");
+	vid->write("\t\t\t\t[OK]\n");
 	vid->setcolour(0,7);
 }
 
@@ -29,9 +29,12 @@ void gdt::set_gate(s32int num, u32int base, u32int limit, u8int access, u8int gr
 	gdt_entries[num].base_high   = (base >> 24) & 0xFF;
 
 	gdt_entries[num].limit_low   = (limit & 0xFFFF);
-	// Note that the following describes the segment as 64-bit
+	
+	#ifdef PLATFORM_x86_64
+	// This following describes the segment as 64-bit
 	gdt_entries[num].granularity = (limit >> 16) & 0x2F;
-
+	#endif
+	
 	gdt_entries[num].granularity |= gran & 0xF0;
 	gdt_entries[num].access      = access;
 }

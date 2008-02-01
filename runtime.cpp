@@ -5,11 +5,9 @@
 #include "include/kheap.h"
 #include "include/video_textmode.h"
 
-extern video * vid;		// Our instance of the video class as defined in kernel.cpp
-
 extern "C" void __cxa_pure_virtual()
 {
-    vid->write("\nThis process tried to execute an illegal action");
+    vid->write("\nWarning: A thread tried to execute an illegal action");
 }
 
 extern "C"
@@ -57,22 +55,22 @@ void construct()
     //Walk and call the constructors in the ctor_list
 
     //the ctor list is defined in the linker script
-    extern void (*__CTOR_LIST__)() ;
+    extern void (*__CTOR_LIST__)();
 
     //hold current constructor in list
     void (**constructor)() = &__CTOR_LIST__ ;
 
     //the first int is the number of constructors
-    int total = *(int *)constructor ;
+    int total = *(int *)constructor;
 
     //increment to first constructor
-    constructor++ ;
+    constructor++;
 
     while(total)
     {
-        (*constructor)() ;
-        total-- ;
-        constructor++ ;
+        (*constructor)();
+        total--;
+        constructor++;
     }
 }
 
@@ -81,22 +79,22 @@ void destruct()
     //Walk and call the deconstructors in the dtor_list
 
     //the dtor list is defined in the linker script
-    extern void (*__DTOR_LIST__)() ;
+    extern void (*__DTOR_LIST__)();
 
     //hold current deconstructor in list
-    void (**deconstructor)() = &__DTOR_LIST__ ;
+    void (**deconstructor)() = &__DTOR_LIST__;
 
     //the first int is the number of deconstructors
-    int total = *(int *)deconstructor ;
+    int total = *(int *)deconstructor;
 
     //increment to first deconstructor
-    deconstructor++ ;
+    deconstructor++;
 
     while(total)
     {
-        (*deconstructor)() ;
-        total-- ;
-        deconstructor++ ;
+        (*deconstructor)();
+        total--;
+        deconstructor++;
     }
 }
 
@@ -125,6 +123,8 @@ void operator delete (void * p)
 //overload the operator "delete[]"
 void operator delete[] (void * p)
 {
+	fixme("kfree not implemented yet");
+	
 	// kfree(p);
 	 // FIXME: This needs to be implemented
 	 

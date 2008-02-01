@@ -56,4 +56,18 @@ void fixme(char * message)
 	vid->write("\n");
 }
 
+// This is a kernel panic - after showing a message, the CPU will halt
+void panic(char * message)
+{
+	disable();			// Let's disable any interrupts
+	
+	vid->setcolour(0, 4);
+	vid->write("Fatal Error:\n\n");
+	vid->setcolour(0, 7);
+	
+	vid->write(message);
+	
+	halt();
+}
+
 

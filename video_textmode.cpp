@@ -1,5 +1,7 @@
 #include "include/video_textmode.h"
 
+video * vid;
+
 video::video()
 {
 	position = 0;	// Reset the X position
