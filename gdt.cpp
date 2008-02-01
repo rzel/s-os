@@ -17,9 +17,7 @@ gdt::gdt()
 	
 	gdt_flush((u32int)&gdt_ptr);
 	
-	vid->setcolour(0,2);
-	vid->write("\t\t\t\t[OK]\n");
-	vid->setcolour(0,7);
+	vid->write("\t\t\t\t[OK]\n", 2);
 }
 
 void gdt::set_gate(s32int num, u32int base, u32int limit, u8int access, u8int gran)

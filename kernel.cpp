@@ -10,31 +10,31 @@ kernel::kernel()
 {
 	vid = new video();
 	
-	vid->setcolour(0, 14);
-	vid->write("Starting SoS...\n\n");
-	vid->setcolour(0, 7);
+	vid->write("Starting SoS...\n\n", 14);
 	
 	init();
 }
 
 kernel::~kernel()
 {
-	vid->write("\nShutting Down...\n");
+	vid->write("\nShutting Down...\n", 14);
 	
 	terminate();
 }
 
 void kernel::init()
 {	
-	#ifdef PLATFORM_X86_64
+	#ifdef PLATFORM_x86_64
 		enable_long_mode();
 	#endif
 	
-	gdi_i = new gdt();
+	gdt_i = new gdt();
+	idt_i = new idt();
 					
 	paging_i = new paging();
 }
 
+#ifdef PLATFORM_x86_64
 void kernel::enable_long_mode()
 {
 	// This function will only be called if the platform is defined as
@@ -45,27 +45,24 @@ void kernel::enable_long_mode()
 	// support 64 bit code
 	if(!cpuid_check_flag(CPUID_FLAG_IA64))
 	{
-		vid->setcolour(0, 4);
-		vid->write("\t\t\t[FAIL]\n\n");
+		vid->write("\t\t\t[FAIL]\n\n", 4);
 		
-		panic("This processor does not support 64 bit long mode,\nand is unable to run this version of SoS.\n\nFor more information, please cousult the user manual");
+		panic("This processor does not support 64 bit long mode,\nand is unable to run this version of SoS.\n\nFor more information, please cousult the user manual", 4);
 		
 		halt();
 	}
 	
-	vid->setcolour(0, 2);
-	vid->write("\t\t\t[OK]\n");
+	vid->write("\t\t\t[OK]\n", 2);
 	
-	fixme("Jump to Long mode here");
-	
-	vid->setcolour(0, 7);
-	
+	fixme("Jump to Long mode here");	
 }
+#endif
 
 void kernel::terminate()
 {	
 	delete paging_i;
-	//delete gdt_i;
+	delete gdt_i;
+	delete idt_i;
 	delete vid;
 	
 	destruct();
@@ -81,12 +78,9 @@ void kernel::calculate_memory(struct multiboot * mboot_ptr)
 	
 	total_memory = upper + lower;
 	
-	vid->setcolour(0, 2);
+	vid->putint((u32int) total_memory / 1024, 2);
 	
-	vid->putint((u32int) total_memory / 1024);
-	
-	vid->write("MB detected\n");
-	vid->setcolour(0, 7);
+	vid->write("MB detected\n", 2);
 }
 
 

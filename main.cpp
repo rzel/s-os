@@ -10,10 +10,8 @@ int main(struct multiboot *mboot_ptr)
 	kernel_i = new kernel();		// Start up the kernel
 	kernel_i->calculate_memory(mboot_ptr);
 	
-	vid->setcolour(0, 2);
-	vid->write("\nSoS Version ");
-	vid->write(SYSTEM_VERSION);
-	vid->setcolour(0, 7);
+	vid->write("\nSoS Version ", 2);
+	vid->write(SYSTEM_VERSION, 2);
 	
 	test();
 

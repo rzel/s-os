@@ -32,26 +32,24 @@ u16int inw(u16int port)
 }
 
 // Copy len bytes from src to dest.
-void memcpy(u8int *dest, const u8int *src, u32int len)
+void memcpy(u32int *dest, const u32int *src, u32int len)
 {
-    const u8int *sp = (const u8int *)src;
-    u8int *dp = (u8int *)dest;
+    const u32int *sp = (const u32int *)src;
+    u32int *dp = (u32int *)dest;
     for(; len != 0; len--) *dp++ = *sp++;
 }
 
 // Write len copies of val into dest.
-void memset(u8int *dest, u8int val, u32int len)
+void memset(u32int *dest, u32int val, u32int len)
 {
-    u8int *temp = (u8int *)dest;
+    u32int *temp = (u32int *)dest;
     for ( ; len != 0; len--) *temp++ = val;
 }
 
 // This function prints a FIXME: message
 void fixme(char * message)
 {
-	vid->setcolour(0, 4);
-	vid->write("FIXME: ");
-	vid->setcolour(0, 7);
+	vid->write("FIXME: ", 4);
 	vid->write(message);
 	vid->write("\n");
 }
@@ -61,9 +59,7 @@ void panic(char * message)
 {
 	disable();			// Let's disable any interrupts
 	
-	vid->setcolour(0, 4);
-	vid->write("Fatal Error:\n\n");
-	vid->setcolour(0, 7);
+	vid->write("Fatal Error:\n\n", 4);
 	
 	vid->write(message);
 	

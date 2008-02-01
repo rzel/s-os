@@ -3,6 +3,7 @@
 #include "include/video_textmode.h"
 
 extern u32int placement_address;
+extern "C" { u32int get_cr2(); };
 
 // Macros used in the bitset algorithms.
 #define INDEX_FROM_BIT(a) (a/(8*4))
@@ -23,11 +24,11 @@ paging::paging()
 	frames = (u32int*)kmalloc(INDEX_FROM_BIT(nframes));
 	
 	// Clear the memory
-	//memset(frames, NULL, INDEX_FROM_BIT(nframes));
+	memset(frames, NULL, INDEX_FROM_BIT(nframes));
 	
-	vid->setcolour(0,2);
-	vid->write("\t\t\t[OK]\n");
-	vid->setcolour(0,7);
+	
+	
+	vid->write("\t\t\t[Incomplete]\n", 4);
 }
 
 paging::~paging()
@@ -64,9 +65,24 @@ u32int paging::test_frame(u32int frame_address)
 
 u32int paging::first_frame()
 {
-	fixme("stub: first_frame not implemented");
+	for (u32int i = 0; i < INDEX_FROM_BIT(nframes); i++)
+	{
+		if (frames[i] != 0xFFFFFFFF) // nothing free, exit early.
+		{
+			// at least one bit is free here.
+			for (int j = 0; j < 32; j++)
+			{
+				u32int toTest = 0x1 << j;
+				
+				if ( !(frames[i]&toTest) )
+				{
+					return i*4*8+j;
+				}
+			}
+		}
+	}
 	
-	return 1;
+	return NULL;
 }
 
 void paging::alloc_frame(page_t * page, bool is_kernel, bool is_writeable)
@@ -76,7 +92,16 @@ void paging::alloc_frame(page_t * page, bool is_kernel, bool is_writeable)
 
 void paging::free_frame(page_t * page)
 {
-	fixme("stub: free_frame not implemented");
+	if(page->frame == 0x0)
+	{
+		// If that frame is not allocated, we won't try to clear it
+		return;
+	}
+	else
+	{
+		clear_frame(page->frame);
+		page->frame = 0x0;
+	}
 }
 
 // Public Functions
@@ -97,6 +122,20 @@ page_t *get_page(u32int address, bool make, page_directory_t *dir)
 	
 void page_fault(registers_t regs)
 {
-	fixme("stub: page fault handler not implemented");
+	u32int fault_address = get_cr2();
+	
+	// Print some info to say what happenned
+	vid->write("\nPage Fault (", 4);
+	
+	if((regs.err_code & 0x1) == 0)	vid->write("Page not Present", 4);
+	if(regs.err_code & 0x2 == 1)		vid->write("Write Operation", 4);
+	if(regs.err_code & 0x4 == 1)		vid->write("Processor was in User Mode", 4);
+	if(regs.err_code & 0x8 == 1)		vid->write("Overwritten Reserved Page Bits", 4);
+	
+	vid->write(") at ", 4);
+	vid->puthex(fault_address, 4);
+	
+	panic("System Halted");
+	
 }
 

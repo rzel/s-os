@@ -1,12 +1,13 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 - SVN Revision 29"
+#define SYSTEM_VERSION "0.1 - SVN Revision 30"
 
 #include "video_textmode.h"
 #include "common.h"
 #include "vbe.h"
 #include "gdt.h"
+#include "idt.h"
 #include "paging.h"
 #include "multiboot.h"
 #include "cpuid.h"
@@ -24,11 +25,15 @@ class kernel {
 protected:
 	void init();
 	void terminate();
-	void enable_long_mode();
 	
-	// Instances of our GDT and paging objects
+	#ifdef PLATFORM_x86_64
+	void enable_long_mode();
+	#endif
+	
+	// Instances of our GDT, IDT and paging objects
+	gdt * gdt_i;
+	idt * idt_i;
 	paging * paging_i;
-	gdt * gdi_i;
 	
 	// Variables
 	u32int total_memory;

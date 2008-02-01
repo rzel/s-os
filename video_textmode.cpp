@@ -35,9 +35,11 @@ void video::clear()
 	offset = 0;
 }
 
-void video::write(char *cp)
+void video::write(char *cp, u32int fore, u32int back)
 {
 	char *str = cp, *ch;
+	
+	setcolour(back, fore);
 	
 	for(ch = str; *ch; ch++)
 	{
@@ -80,8 +82,8 @@ void video::putch(char c)
 		
 }
 
-void video::putint(u32int n)
-{
+void video::putint(u32int n, u32int fore, u32int back)
+{	
 	if(n == 0)
 	{
 		putch('0');
@@ -107,12 +109,14 @@ void video::putint(u32int n)
 		c2[i--] = c[j++];
 	}
 	
-	write(c2);
+	write(c2, fore, back);
 	
 }
 
-void video::puthex(u32int n)
+void video::puthex(u32int n, u32int fore, u32int back)
 {
+	setcolour(back, fore);	
+	
 	s32int tmp;
 
 	write("0x");
