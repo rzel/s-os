@@ -4,8 +4,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+// The platfrom is that SoS will be built for is defined here. 
+// Options are PLATFORM_x86_64 or PLATFORM_X86
 #define PLATFORM_X86
-// #define PLATFORM_x86_64
 
 #define NULL 0
 
@@ -22,8 +23,8 @@ void outb(u16int port, u8int value);
 void outw(u16int port, u16int value);
 u8int inb(u16int port);
 u16int inw(u16int port);
-void memcpy(u8int *dest, const u8int *src, u32int len);
-void memset(u8int *dest, u8int val, u32int len);
+void memcpy(u32int *dest, const u32int *src, u32int len);
+void memset(u32int *dest, u32int val, u32int len);
 
 // Some handy assembly functions
 extern "C" 

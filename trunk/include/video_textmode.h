@@ -24,11 +24,11 @@ public:
 	
 	// Other methods
 	void clear();
-	void write(char * cp);
+	void write(char * cp, u32int fore = 7, u32int back = 0);
 	
 	void putch(char c);
-	void putint(u32int n);
-	void puthex(u32int n);
+	void putint(u32int n, u32int fore = 7, u32int back = 0);
+	void puthex(u32int n, u32int fore = 7, u32int back = 0);
 	
 	void scroll();
 	void move_cursor(u8int x, u8int);

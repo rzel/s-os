@@ -1,4 +1,5 @@
-[GLOBAL gdt_flush]    ; Allows the C code to call gdt_flush().
+[global gdt_flush]
+[global get_cr2]
 
 gdt_flush:
 	mov eax, [esp+4]  ; Get the pointer to the GDT, passed as a parameter.
@@ -12,4 +13,8 @@ gdt_flush:
 	mov ss, ax
 	jmp 0x08:.flush   ; 0x08 is the offset to our code segment: Far jump!
 .flush:
+	ret
+	
+get_cr2:
+	mov eax, cr2 
 	ret
