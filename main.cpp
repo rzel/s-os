@@ -33,12 +33,15 @@ void test()
 	vid->write("\n");
 	
 	vid->write("\nProcessor vendor string: ");
-	vid->write(get_cpu_vendor());
+	vid->write(get_cpu_vendor(), 2);
 	
 	vid->write("\n\nYou can test the (very basic) keyboard driver by typing something here.\n\n");
 	vid->write("You can restart by pressing ");
 	//vid->write("Ctrl+Alt+Delete", 14);
 	vid->write("Escape", 14);
 	vid->write(".\n");
+	
+	vid->write("SoS", 2);
+	vid->write(">");
 }
 

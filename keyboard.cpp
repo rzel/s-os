@@ -66,7 +66,7 @@ void keyboard_irq_callback(registers_t r)
 	{	
 		if(scancode == 0x01)
 			delete kernel_i;
-		else
+		else if(kbdus[scancode] != 0)
 			vid->putch(kbdus[scancode]);        
 	}
 }
