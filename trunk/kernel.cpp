@@ -17,7 +17,7 @@ kernel::kernel()
 
 kernel::~kernel()
 {
-	vid->write("\nShutting Down...\n", 14);
+	vid->write("\n\nShutting Down...\n\n", 14);
 	
 	terminate();
 }
@@ -32,6 +32,8 @@ void kernel::init()
 	idt_i = new idt();
 					
 	paging_i = new paging();
+	
+	keyboard_i = new keyboard();
 }
 
 #ifdef PLATFORM_x86_64
@@ -64,9 +66,34 @@ void kernel::terminate()
 	delete gdt_i;
 	delete idt_i;
 	delete vid;
+	delete keyboard_i;
 	
 	destruct();
 	__cxa_finalize(0);
+	
+	// Restart for now
+	restart();
+}
+
+void kernel::restart()
+{
+	u32int i;
+	
+	disable();
+
+	do
+	{
+		i = inb(0x64);
+		if(i & 0x01)
+		{
+			(void)inb(0x60);
+			continue;
+		}
+		
+	} while(i & 0x02);
+
+	outb(0x64, 0xFE);
+	halt();
 }
 
 void kernel::calculate_memory(struct multiboot * mboot_ptr)

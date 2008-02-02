@@ -1,7 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 - SVN Revision 30"
+#define SYSTEM_VERSION "0.1 - SVN Revision 31"
 
 #include "video_textmode.h"
 #include "common.h"
@@ -11,6 +11,7 @@
 #include "paging.h"
 #include "multiboot.h"
 #include "cpuid.h"
+#include "keyboard.h"
 
 extern "C"
 {
@@ -34,6 +35,7 @@ protected:
 	gdt * gdt_i;
 	idt * idt_i;
 	paging * paging_i;
+	keyboard * keyboard_i;
 	
 	// Variables
 	u32int total_memory;
@@ -43,6 +45,8 @@ public:
 	~kernel();
 	
 	void calculate_memory(struct multiboot * mboot_ptr);
+	
+	void restart();
 };
 
 extern kernel * kernel_i;
