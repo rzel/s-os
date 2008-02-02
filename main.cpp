@@ -14,6 +14,8 @@ int main(struct multiboot *mboot_ptr)
 	vid->write(SYSTEM_VERSION, 2);
 	
 	test();
+	
+	for(; ;);
 
 	delete kernel_i;	// Delete the instance of the kernel
 	
@@ -33,5 +35,10 @@ void test()
 	vid->write("\nProcessor vendor string: ");
 	vid->write(get_cpu_vendor());
 	
-	vid->write("\n");
+	vid->write("\n\nYou can test the (very basic) keyboard driver by typing something here.\n\n");
+	vid->write("You can restart by pressing ");
+	//vid->write("Ctrl+Alt+Delete", 14);
+	vid->write("Escape", 14);
+	vid->write(".\n");
 }
+

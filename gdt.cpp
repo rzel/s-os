@@ -1,8 +1,6 @@
 #include "include/gdt.h"
 #include "include/video_textmode.h"
 
-extern video * vid;
-
 gdt::gdt()
 {
 	vid->write("Setting up GDT");

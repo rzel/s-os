@@ -14,4 +14,4 @@ timeout 5
 #SoS
 title	SoS - Stephen's Operating System
 root	(cd)
-kernel	/system/kernel.sys
+kernel	/system/kernel

@@ -5,8 +5,8 @@
 #define COMMON_H
 
 // The platfrom is that SoS will be built for is defined here. 
-// Options are PLATFORM_x86_64 or PLATFORM_X86
-#define PLATFORM_X86
+// Options are PLATFORM_x86_64 or PLATFORM_x86
+#define PLATFORM_x86
 
 #define NULL 0
 
