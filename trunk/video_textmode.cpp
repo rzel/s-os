@@ -70,6 +70,24 @@ void video::putch(char c)
 		 cursor_x = (cursor_x + 8) & ~(8 - 1);
 		 position = cursor_x;
 	}
+	else if(c == '\b')
+	{
+		if(cursor_x > 0)
+		{
+			cursor_x--;
+			position--;
+		}
+		else
+		{
+			offset -= width;
+			cursor_y--;
+			
+			position = width - 1;
+			cursor_x = position;
+		}
+		
+		videomem[offset + position] = ' ' | colour;
+	}
 	else
 	{
 		videomem[offset + position] = (unsigned char) c | colour;
