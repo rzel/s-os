@@ -34,6 +34,7 @@ void kernel::init()
 	paging_i = new paging();
 	
 	keyboard_i = new keyboard();
+	timer_i = new timer();
 }
 
 #ifdef PLATFORM_x86_64
@@ -65,9 +66,10 @@ void kernel::terminate()
 	delete paging_i;
 	delete gdt_i;
 	delete idt_i;
-	delete vid;
 	delete keyboard_i;
-	
+	delete timer_i;
+	delete vid;
+		
 	destruct();
 	__cxa_finalize(0);
 	

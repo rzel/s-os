@@ -13,4 +13,6 @@ public:
 
 void keyboard_irq_callback(registers_t r);
 
+extern keyboard * keyboard_i;
+
 #endif
