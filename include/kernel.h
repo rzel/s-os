@@ -1,13 +1,14 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 - SVN Revision 32"
+#define SYSTEM_VERSION "0.1 - SVN Revision 33"
 
 #include "video_textmode.h"
 #include "common.h"
 #include "vbe.h"
 #include "gdt.h"
 #include "idt.h"
+#include "timer.h"
 #include "paging.h"
 #include "multiboot.h"
 #include "cpuid.h"
@@ -35,7 +36,6 @@ protected:
 	gdt * gdt_i;
 	idt * idt_i;
 	paging * paging_i;
-	keyboard * keyboard_i;
 	
 	// Variables
 	u32int total_memory;
