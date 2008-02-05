@@ -1,0 +1,17 @@
+# s-os Boot CD - Version 0.1
+
+# Boot the first entry
+default 0
+
+#Splash Image
+splashimage=(hd0,0)/boot/grub/sos.xpm.gz
+viewport 1 1 79 24
+
+#Timeout
+timeout 5
+
+
+#SoS
+title	SoS - Stephen's Operating System
+root	(hd0,0)
+kernel	/system/kernel
