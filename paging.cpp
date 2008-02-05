@@ -87,7 +87,34 @@ u32int paging::first_frame()
 
 void paging::alloc_frame(page_t * page, bool is_kernel, bool is_writeable)
 {
-	fixme("stub: alloc_frame not implemented");
+	if(page->frame != 0)
+	{
+		return; // This frame has already been allocated!
+	}
+	
+	u32int index = first_frame();
+	
+	if(index == (u32int)-1)	// Is that possible?
+	{
+		panic("Your computer is completly out of memory and cannot continue.");
+	}
+	
+	set_frame(index * 0x1000);	// Set the frame's address
+	
+	page->present = 1;
+	
+	if(is_writeable)			// Is the page read only?
+		page->rw = 1;
+	else
+		page->rw = 0;
+	
+	if(is_kernel)				// Does this belong to the kernel or a user?
+		page->user = 0;
+	else
+		page->user = 1;
+	
+	page->frame = index;		// Set the index and we're done!
+	
 }
 
 void paging::free_frame(page_t * page)
