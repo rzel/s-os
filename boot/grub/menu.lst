@@ -4,7 +4,7 @@
 default 0
 
 #Splash Image
-splashimage=(cd)/boot/grub/sos.xpm.gz
+splashimage=(hd0,0)/boot/grub/sos.xpm.gz
 viewport 1 1 79 24
 
 #Timeout
@@ -13,5 +13,5 @@ timeout 5
 
 #SoS
 title	SoS - Stephen's Operating System
-root	(cd)
+root	(hd0,0)
 kernel	/system/kernel
