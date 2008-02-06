@@ -24,9 +24,12 @@ paging::paging()
 	frames = (u32int*)kmalloc(INDEX_FROM_BIT(nframes));
 	
 	// Clear the memory
-	memset(frames, NULL, INDEX_FROM_BIT(nframes));
+	/*for(int i = 0; i < INDEX_FROM_BIT(nframes); i++)
+	{
+		frames[i] = NULL;
+	}*/
 	
-	
+	//register_irq(14, page_fault);
 	
 	vid->write("\t\t\t[Incomplete]\n", 4);
 }
@@ -103,15 +106,8 @@ void paging::alloc_frame(page_t * page, bool is_kernel, bool is_writeable)
 	
 	page->present = 1;
 	
-	if(is_writeable)			// Is the page read only?
-		page->rw = 1;
-	else
-		page->rw = 0;
-	
-	if(is_kernel)				// Does this belong to the kernel or a user?
-		page->user = 0;
-	else
-		page->user = 1;
+	page->rw = (int)is_writeable;	// Is the page read only?
+	page->user = (int)!is_kernel;	// Does this belong to the kernel or a user?
 	
 	page->frame = index;		// Set the index and we're done!
 	

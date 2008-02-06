@@ -35,6 +35,8 @@ void kernel::init()
 	
 	keyboard_i = new keyboard();
 	timer_i = new timer();
+	
+	seashell_i = new seashell();
 }
 
 #ifdef PLATFORM_x86_64
@@ -50,12 +52,21 @@ void kernel::enable_long_mode()
 	{
 		vid->write("\t\t\t[FAIL]\n\n", 4);
 		
-		panic("This processor does not support 64 bit long mode,\nand is unable to run this version of SoS.\n\nFor more information, please cousult the user manual", 4);
+		panic("This processor does not support 64 bit long mode,\nand is unable to run this version of SoS.\n\nFor more information, please cousult the user manual");
 		
 		halt();
 	}
 	
+	// Will be if PAE bit is set (because we are already in long mode.s
+	if(1 == 0)
+	{
+		vid->write("\t\t\t[DONE]\n", 11);
+		
+		return; // Exit
+	}
+	
 	vid->write("\t\t\t[OK]\n", 2);
+	
 	
 	fixme("Jump to Long mode here");	
 }
@@ -63,6 +74,7 @@ void kernel::enable_long_mode()
 
 void kernel::terminate()
 {	
+	delete seashell_i;
 	delete paging_i;
 	delete gdt_i;
 	delete idt_i;
