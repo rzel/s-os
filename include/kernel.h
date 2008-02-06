@@ -1,7 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 - SVN Revision 34"
+#define SYSTEM_VERSION "0.1 - SVN Revision 35"
 
 #include "video_textmode.h"
 #include "common.h"
@@ -13,6 +13,7 @@
 #include "multiboot.h"
 #include "cpuid.h"
 #include "keyboard.h"
+#include "seashell.h"
 
 extern "C"
 {

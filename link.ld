@@ -32,5 +32,5 @@ SECTIONS
 
   end = .; _end = .; __end = .;
 }
-INPUT(kernel_asm.o kernel.o main.o runtime.o common.o video_textmode.o descriptor_tables.o gdt.o idt.o isr.o kheap.o vbe.o paging.o cpuid.o cpuid_asm.o keyboard.o timer.o)
+INPUT(kernel_asm.o kernel.o main.o runtime.o common.o video_textmode.o descriptor_tables.o gdt.o idt.o isr.o kheap.o vbe.o paging.o cpuid.o cpuid_asm.o keyboard.o timer.o seashell.o)
 OUTPUT(image/system/kernel)

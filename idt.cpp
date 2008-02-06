@@ -155,14 +155,21 @@ void register_isr(u32int irq, isr_t handler)
 
 void isr_handler(registers_t r)
 {
-	vid->write("\nERROR: ", 4);
-	vid->write("Recieved Interrupt ");
-	vid->putint(r.int_no);
-	vid->write(" - ");
-	vid->write((char *)exceptionMessages[r.int_no]);
-	vid->write("!\n\n");
+	if(interrupt_handlers[r.int_no] == 0)
+	{
+		vid->write("\nERROR: ", 4);
+		vid->write("Illegal Exception!");
+		vid->putint(r.int_no);
+		vid->write(" - ");
+		vid->write((char *)exceptionMessages[r.int_no]);
+		vid->write("!\n\n");
 	
-	panic("System Halted");
+		panic("System Halted");
+	}
+	else
+	{
+		(interrupt_handlers[r.int_no])(r);
+	}	
 }
 
 void irq_handler(registers_t r)

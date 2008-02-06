@@ -94,6 +94,8 @@ keyboard::keyboard()
 	
 	register_irq(1, &keyboard_irq_callback);
 	
+	print_chars = false;
+	
 	vid->write("\t\t\t[OK]\n", 2);
 }
 
@@ -102,8 +104,60 @@ keyboard::~keyboard()
 
 }
 
-void keyboard_irq_callback(registers_t r)
+void keyboard::add_char(char c)
+{	
+	if(c == '\b')
+	{
+		// We don't want to backspace over the prompt
+		if(position == 0)
+		{
+			return;		
+		}
+		
+		position--;
+		buffer[position] = '\0';
+	}
+	else if(c == '\n')
+	{
+		buffer[position] = '\1';
+	}
+	else
+	{
+		buffer[position] = c;
+		position++;
+		buffer[position] = '\0';
+	}	
+	
+	
+	// Kind of hackish, I know
+	if(print_chars)
+	{
+		vid->putch(c);
+	}
+}
+
+char * keyboard::get_string()
 {
+	print_chars = true;
+	
+	// Clear that keyboard buffer
+	position = 0;
+	buffer[0] = '\0';
+	
+	while(buffer[position] != '\1')
+	{
+		
+	}
+	
+	buffer[position] = '\0';
+	
+	print_chars = false;
+	
+	return (char *)buffer;
+}
+
+void keyboard_irq_callback(registers_t r)
+{	
 	u32int scancode = inb(0x60);
 	
 	// Check if the key is being released
@@ -129,11 +183,12 @@ void keyboard_irq_callback(registers_t r)
 		{
 			if(shift)
 			{
-				vid->putch(kbdshift[scancode]);
+				keyboard_i->add_char(kbdshift[scancode]);
+				
 			}
 			else
 			{
-				vid->putch(kbdus[scancode]);	
+				keyboard_i->add_char(kbdus[scancode]);
 			}
 		}
 	}

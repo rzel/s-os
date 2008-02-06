@@ -46,6 +46,20 @@ void memset(u32int *dest, u32int val, u32int len)
     for ( ; len != 0; len--) *temp++ = val;
 }
 
+bool strcmp(const char * str1, const char * str2)
+{
+	while(*str1 == *str2)
+	{
+		if(*str1 == 0)
+			return true;
+		
+		str1++;
+		str2++;
+	}
+	
+	return false;
+}
+
 // This function prints a FIXME: message
 void fixme(char * message)
 {

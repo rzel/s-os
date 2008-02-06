@@ -26,6 +26,8 @@ u16int inw(u16int port);
 void memcpy(u32int *dest, const u32int *src, u32int len);
 void memset(u32int *dest, u32int val, u32int len);
 
+bool strcmp(const char * str1, const char * str2);
+
 // Some handy assembly functions
 extern "C" 
 { 

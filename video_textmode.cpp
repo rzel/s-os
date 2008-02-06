@@ -33,6 +33,8 @@ void video::clear()
 	
 	position = 0;	// Reset the position and offset
 	offset = 0;
+	cursor_y = 0;
+	cursor_x = 0;
 }
 
 void video::write(char *cp, u32int fore, u32int back)
@@ -206,7 +208,7 @@ void video::scroll()
 	// Reset the coordinates and offset
 	position = 0;
 	cursor_x = 0;
-	cursor_y = height;
+	cursor_y = height - 1;
 	offset = width * (height - 1);
 	
 }
