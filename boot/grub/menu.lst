@@ -1,4 +1,4 @@
-# s-os Boot CD - Version 0.1
+# s-os Bootable USB drive - Version 0.1
 
 # Boot the first entry
 default 0
@@ -10,8 +10,7 @@ viewport 1 1 79 24
 #Timeout
 timeout 5
 
-
 #SoS
 title	SoS - Stephen's Operating System
-root	(hd0,0)
+root		(hd0,0)
 kernel	/system/kernel
