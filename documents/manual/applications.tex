@@ -1,9 +1,17 @@
-\section{Applications}
-\subsection{Seashell}
-Seashell will be SoS's default terminal. Initially, the terminal will be compiled into the kernel, but after
+\chapter{Applications}
+\section{Seashell}
+Seashell will is SoS's default terminal. Right now, the terminal is part of SoS's kernel, but after
 I have finished porting the C library, and have an elf loader, it will become a seperate application.
 
 Once SoS has a graphical user interface, a graphical version of Seashell will be written.
 
-\subsection{GNU C Compiler}
-Once SoS has a C library, I intend to port the whole GNU C compiler to SoS - to do this, I will also have to make a cross compiler on my computer.
+\section{GNU Compiler Collection}
+Once SoS has a C library, I intend to port the whole GNU compiler collection to SoS. This will require
+a standard C library to be ported first. Then, I will make a cross compiler for my operating system, and
+compile GCC for it. 
+
+This will make it easy to port various UNIX applications (like the nano text editor and Bash) to SoS. 
+
+Before this though, I have a lot of work to do - I will have to finish memory management, write a VFS,
+and write a device driver and filesystem support for CD-ROM drives. I don't know if I'm going to be able
+to support USB drives for a long while, unless they act as emulated hard drives.

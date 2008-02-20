@@ -1,7 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 - SVN Revision 35"
+#define SYSTEM_VERSION "0.1 - SVN Revision 36"
 
 #include "video_textmode.h"
 #include "common.h"

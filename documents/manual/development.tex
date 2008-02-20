@@ -1,0 +1,54 @@
+\chapter{Development}
+SoS is written completly in C++ and assembly. I am trying to keep the code as clean as possible, after
+previous attempts at writing operating systems that ended up being very dis-organised and messy, and was
+generally very hard to add new features to and maintain.
+
+\section{Contributing}
+Developing an operating system with just one developer is very difficult, and as such, I welcome any
+contributions. The best way to do this is to download the SVN tree, make your modifications, and then
+email me the diff.
+
+\section{Getting the Source}
+You can download SoS's source code by entering 
+\begin{verbatim}svn co http://s-os.googlecode.com/svn/trunk s-os\end{verbatim}
+ in your terminal.
+
+\section{Compiling}
+To compile SoS, you must first have a GCC toolchain installed. SoS is written and tested with Linux, so that
+is probably the best way to go, although there's no reason that a cygwin cross compiler wouldn't work. If you're
+using Ubuntu, you may have to download the build-essentials package using apt-get or Synaptic.
+
+To compile SoS, simply run the command \texttt{make} in the SVN trunk directory (the one that contains the makefile
+and most of the C++ source files). This will build the SoS kernel image and save it in the image folder (in image/system).
+
+To make a CD image for testing either on real hardware, or on an emulator, use the \texttt{make install} command.
+
+\section{Coding Style}
+Almost everything (except for a few miscelaneous functions like \texttt{memcpy()}, and the heap management
+functions like \texttt{kmalloc()}, \texttt{kfree()} are organised into classes. There is a different class
+for each main feature - like the kernel, the GDT and IDT code, keyboard management etc.. The class is defined
+in a header file with the same name as the class (eg.  \texttt{gdt.h} contains the  GDT class), which is placed
+in the include directory.
+
+\subsection{Archetectures}
+If your code is archetecture specific, remember to enclose it in \texttt{\#ifdef} and \texttt{\#endif} directives
+specifing the platform that the code runs on - for example, \texttt{PLATFORM\_x86} or \texttt{PLATFORM\_x86\_64}.
+
+\subsection{Indentation}
+The style of indentation that I prefer is to put the opening brace on the line below the function / if statement etc.
+and then start a new tab level. Make sure your text editor adds tabs, not spaces. For example:
+
+\begin{verbatim}
+#include "include/common.h"
+
+void an_example_function(int a)
+{
+      int c = 7;
+	
+      if(a == c)
+      {
+            // Do something
+      }
+}
+\end{verbatim}
+
