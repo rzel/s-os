@@ -115,7 +115,7 @@ void keyboard::add_char(char c)
 		}
 		
 		position--;
-		buffer[position] = '\0';
+		buffer[position] = 0;
 	}
 	else if(c == '\n')
 	{
@@ -125,7 +125,7 @@ void keyboard::add_char(char c)
 	{
 		buffer[position] = c;
 		position++;
-		buffer[position] = '\0';
+		buffer[position] = 0;
 	}	
 	
 	
@@ -140,16 +140,16 @@ char * keyboard::get_string()
 {
 	print_chars = true;
 	
-	// Clear that keyboard buffer
+	// Clear the keyboard buffer
 	position = 0;
-	buffer[0] = '\0';
+	buffer[0] = 0;
 	
 	while(buffer[position] != '\1')
 	{
 		
 	}
 	
-	buffer[position] = '\0';
+	buffer[position] = 0;
 	
 	print_chars = false;
 	

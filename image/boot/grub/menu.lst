@@ -15,3 +15,4 @@ timeout 5
 title	SoS - Stephen's Operating System
 root	(cd)
 kernel	/system/kernel
+initrd	/system/initrd

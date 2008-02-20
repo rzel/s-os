@@ -6,9 +6,11 @@
 class seashell
 {
 private:
-	void seashell_help();
-	void seashell_about();	
-	void seashell_uname();
+	u32int process_arguments(char * str, char * argv[]);
+
+	void seashell_help(int argc, char * argv[]);
+	void seashell_about(int argc, char * argv[]);	
+	void seashell_uname(int argc, char * argv[]);
 
 public:
 	seashell();
