@@ -1,6 +1,8 @@
 #summary About Sos
 #labels Featured
 
+*Please be aware that the code hosted here in the SVN repository is very old. The new code can be accessed in out Git repository at [http://gitorious.org/projects/sos/repos/mainline Gitorious]*
+
 = Introduction =
 
-SoS is a small operating system written in C++ with some assembly. It is currently a 32 bit operating system, but I am working to change it to run in 64 bit long mode. I will drop support for 32 bit completly, as pretty much no new computer sold in the last few years comes with a 32 bit processor anymore.
+SoS is a small operating system written in C++ with some assembly. 
