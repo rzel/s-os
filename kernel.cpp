@@ -28,11 +28,16 @@ void kernel::init()
 		enable_long_mode();
 	#endif
 	
+	
 	gdt_i = new gdt();
 	idt_i = new idt();
 					
 	paging_i = new paging();
 	
+	// Virtual File System
+	vfs_i = new vfs();
+	
+	// Device Drivers
 	keyboard_i = new keyboard();
 	timer_i = new timer();
 	
@@ -78,6 +83,7 @@ void kernel::terminate()
 	delete paging_i;
 	delete gdt_i;
 	delete idt_i;
+	delete vfs_i;
 	delete keyboard_i;
 	delete timer_i;
 	delete vid;

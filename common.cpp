@@ -61,7 +61,7 @@ bool strcmp(const char * str1, const char * str2)
 }
 
 // This function prints a FIXME: message
-void fixme(char * message)
+void fixme(const char * message)
 {
 	vid->write("FIXME: ", 4);
 	vid->write(message);
@@ -69,7 +69,7 @@ void fixme(char * message)
 }
 
 // This is a kernel panic - after showing a message, the CPU will halt
-void panic(char * message)
+void panic(const char * message)
 {
 	disable();			// Let's disable any interrupts
 	

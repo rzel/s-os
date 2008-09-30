@@ -1,9 +1,9 @@
 #include "include/kernel.h"
 
-int main(struct multiboot *mboot_ptr);
+extern "C" int _main(struct multiboot *mboot_ptr);
 void test();
 
-int main(struct multiboot *mboot_ptr)
+int _main(struct multiboot *mboot_ptr)
 {
 	construct();
 	

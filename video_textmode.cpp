@@ -37,9 +37,9 @@ void video::clear()
 	cursor_x = 0;
 }
 
-void video::write(char *cp, u32int fore, u32int back)
+void video::write(const char *cp, u32int fore, u32int back)
 {
-	char *str = cp, *ch;
+	const char *str = cp, *ch;
 	
 	setcolour(back, fore);
 	

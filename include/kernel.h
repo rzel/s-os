@@ -1,7 +1,7 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
-#define SYSTEM_VERSION "0.1 - SVN Revision 36"
+#define SYSTEM_VERSION "0.1 - SVN Revision 37"
 
 #include "video_textmode.h"
 #include "common.h"
@@ -13,12 +13,15 @@
 #include "multiboot.h"
 #include "cpuid.h"
 #include "keyboard.h"
+#include "vfs.h"
 #include "seashell.h"
 
 extern "C"
 {
 	int __cxa_atexit(void (*f)(void *), void *p, void *d);
 	void __cxa_finalize(void *d);
+	
+	void shutdown();
 };
 
 void construct();

@@ -9,9 +9,9 @@
 ; and finally restores the stack frame.
 
 isr_common_stub:
-	pusha		; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
+	pusha			; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
 
-	mov ax, ds	; Lower 16-bits of eax = ds.
+	mov ax, ds		; Lower 16-bits of eax = ds.
 	push eax		; save the data segment descriptor
 
 	mov ax, 0x10	; load the kernel data segment descriptor
@@ -29,14 +29,14 @@ isr_common_stub:
 	mov gs, ax
 
 	popa			; Pops edi,esi,ebp...
-	add esp, 8	; Cleans up the pushed error code and pushed ISR number
+	add esp, 8		; Cleans up the pushed error code and pushed ISR number
 	sti
 	iret			; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
 irq_common_stub:
-	pusha		; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
+	pusha			; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
 
-	mov ax, ds	; Lower 16-bits of eax = ds.
+	mov ax, ds		; Lower 16-bits of eax = ds.
 	push eax		; save the data segment descriptor
 
 	mov ax, 0x10	; load the kernel data segment descriptor
@@ -54,7 +54,7 @@ irq_common_stub:
 	mov gs, bx
 
 	popa			; Pops edi,esi,ebp...
-	add esp, 8	; Cleans up the pushed error code and pushed ISR number
+	add esp, 8		; Cleans up the pushed error code and pushed ISR number
 	sti
 	iret			; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
