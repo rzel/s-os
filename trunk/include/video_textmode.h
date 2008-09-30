@@ -24,7 +24,7 @@ public:
 	
 	// Other methods
 	void clear();
-	void write(char * cp, u32int fore = 7, u32int back = 0);
+	void write(const char * cp, u32int fore = 7, u32int back = 0);
 	
 	void putch(char c);
 	void putint(u32int n, u32int fore = 7, u32int back = 0);

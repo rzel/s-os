@@ -36,7 +36,7 @@ extern "C"
 	void enable();
 };
 
-void fixme(char * message);
-void panic(char * message);
+void fixme(const char * message);
+void panic(const char * message);
 
 #endif

@@ -2,7 +2,7 @@
 #include "include/cpuid.h"
 //#include "include/video_textmode.h"
 
-char * get_cpu_vendor()
+const char * get_cpu_vendor()
 {	
 	// Still trying to work out how to decode the names without magic numbers...
 	

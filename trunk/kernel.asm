@@ -39,15 +39,16 @@ mboot:
 [global halt]
 [global disable]
 [global enable]
+[global shutdown]
 
-[extern main]			; The main function, as declared in kernel.cpp
+[extern _main]			; The main function, as declared in kernel.cpp
 
 start:
 push ebx				; Load multiboot header location
 
 cli					; Disable interupts
 
-call main				; Call our main function
+call _main				; Call our main function
 
 call halt				; Halt the processor
 
@@ -61,4 +62,21 @@ enable:
 disable:
 	cli
 	ret
+	
+shutdown:
+	xor eax,eax
+	mov cr0,eax
+
+	mov ax,5301h
+	xor bx,bx
+	int 15h
+	mov ax,530Eh
+	mov cx,0102h
+	int 15h
+	mov ax,5307h
+	mov bl,0001h
+	mov cx,0003h
+	int 15h
+	;***system will shutdown, or else there was a error***
+Error:
 

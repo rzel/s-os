@@ -54,7 +54,7 @@ extern "C" {
 #define CPUID_FLAG_IA64         0x40000000      /* IA-64 (64-bit Intel CPU) */
 #define CPUID_FLAG_PBE          0x80000000      /* Pending Break Event. */
 
-char * get_cpu_vendor();
+const char * get_cpu_vendor();
 bool cpuid_check_flag(u32int flag);
 
 #endif

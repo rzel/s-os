@@ -3,6 +3,7 @@
 #include "include/keyboard.h"
 #include "include/video_textmode.h"
 #include "include/kernel.h"
+#include "include/kheap.h"
 
 seashell * seashell_i;
 
@@ -62,6 +63,10 @@ void seashell::main()
 			{
 				seashell_uname(arg_num, args);
 			}
+			else if(strcmp(input,"shutdown"))
+			{
+				shutdown();
+			}
 			else
 			{
 				vid->write("Seashell: ");
@@ -76,51 +81,30 @@ void seashell::main()
 u32int seashell::process_arguments(char * str, char * argv[])
 {
 	u32int arg_num = 0;
-	char * args[32];
-	char *in = str, *ch;
+	char ** args;;
 	
-	//char * args[32];
-	
-	/*while(*str != 0)
-	{		
-		while(*str != ' ')
+	/*while(*str)
+	{
+		args[arg_num] = new char[32];
+		
+		while(*str != ' ' && *str)
 		{
-			//*args[arg_num] = *str;
-			
-			//*argv[arg_num]++;
-			*str++;
+			*args[arg_num]++ = *str++;
 		}
 		
 		*str++;
 		
-		if(*str != ' ' && str != 0)
-		{
-			vid->putch('1');
-			vid->putch(*str);
-			arg_num++;
-		}
+		*args[arg_num] = '\0';
+		
+		arg_num++;
 	}*/
 	
-	for(ch = in; *ch; *ch++)
-	{
-		if(*ch == ' ')
-		{
-			arg_num++;
-		}
-		else
-		{
-			//*args[arg_num] = *ch;
-			//*args[arg_num]++;
-			//*args[arg_num] = 0;
-		}
-	}
+	argv = args;
 	
-	//argv = args;
-	
-	return arg_num + 1;
+	return arg_num;
 }
 
-void seashell::seashell_help(int argc, char * argv[])
+void seashell::seashell_help(int argc, char **)
 {
 	if(argc == 1)
 	{
@@ -134,7 +118,7 @@ void seashell::seashell_help(int argc, char * argv[])
 	
 }
 
-void seashell::seashell_about(int argc, char * argv[])
+void seashell::seashell_about(int argc, char **)
 {
 	if(argc == 1)
 	{
@@ -142,10 +126,11 @@ void seashell::seashell_about(int argc, char * argv[])
 		vid->write("Version 0.1 - Running on SoS Version ");
 		vid->write(SYSTEM_VERSION);
 		vid->write("\n\n");
+		vid->write("Please be aware that this is a VERY OLD VERSION of this operating system.\n\n");
 	}
 }
 
-void seashell::seashell_uname(int argc, char * argv[])
+void seashell::seashell_uname(int argc, char **)
 {
 	if(argc == 1)
 	{
